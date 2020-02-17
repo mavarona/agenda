@@ -6,14 +6,16 @@ import projectReducer from './projectReducer';
 import { 
     FORM_PROJECT, 
     GET_PROJECTS,
-    ADD_PROJECT, 
+    ADD_PROJECT,
+    VALIDATE_FORM 
 } 
 from '../../types';
 
 const ProjectState = props => {
     const initialState = {
         projects : [],
-        formNewProject: false
+        formnewproject: false,
+        errorform: false
     }
 
     const projects = [
@@ -45,14 +47,22 @@ const ProjectState = props => {
         })
     }
 
+    const showError = () =>{
+        dispatch({
+            type: VALIDATE_FORM
+        })
+    }
+
     return(
         <projectContext.Provider
             value={{
                 projects: state.projects,
-                formNewProject: state.formNewProject,
+                formnewproject: state.formnewproject,
+                errorform: state.errorform,
                 showForm,
                 getProjects,
-                addProject
+                addProject,
+                showError
             }}
         >
             {props.children}
