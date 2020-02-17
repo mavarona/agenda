@@ -1,7 +1,15 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import Task from './Task';
+import projectContext from '../../context/projects/projectContext';
 
 const ListTask = () => {
+    const dataProjectContext = useContext(projectContext);
+    const { project } = dataProjectContext;
+
+    if(!project) return <h2>No se ha seleccionado ningún proyecto</h2>
+
+    const [currentProject] = project;
+
     const tasks = [
         {name:'Inscribirse', completed: true},
         {name:'Reservar vuelos', completed: true},
@@ -11,7 +19,7 @@ const ListTask = () => {
     ];
     return(
         <Fragment>
-            <h2>Proyecto: Maratón Alpina</h2>
+            <h2>Proyecto: {currentProject.name}</h2>
             <ul className="listado-tareas">
                 {tasks.length === 0
                     ? (<li className="tarea">No hay tareas</li>)
