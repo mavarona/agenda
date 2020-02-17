@@ -4,7 +4,7 @@ import projectContext from '../../context/projects/projectContext';
 const NewProject = () => {
 
     const dataProjectContext = useContext(projectContext);
-    const { formNewProject, showForm } = dataProjectContext;
+    const { formNewProject, showForm, addProject } = dataProjectContext;
 
     const [project, saveProject] = useState({
         name: ''
@@ -21,6 +21,10 @@ const NewProject = () => {
 
     const onSubmitProject = e => {
         e.preventDefault();
+        if(name === ''){
+            return;
+        }
+        addProject(project);
     };
 
     return(
@@ -44,7 +48,7 @@ const NewProject = () => {
                         type="text"
                         className="input-text"
                         placeholder="Nuevo Proyecto"
-                        name="nombre"
+                        name="name"
                         value={name}
                         onChange={onChangeProject}
                     />

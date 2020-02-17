@@ -1,4 +1,8 @@
-import { FORM_PROJECT, GET_PROJECTS } from '../../types';
+import {
+    FORM_PROJECT,
+    GET_PROJECTS,
+    ADD_PROJECT
+} from '../../types';
 
 export default (state, action) => {
     switch (action.type) {
@@ -11,6 +15,12 @@ export default (state, action) => {
             return {
                 ...state,
                 projects: action.payload
+            }
+        case ADD_PROJECT:
+            return {
+                ...state,
+                projects: [...state.projects, action.payload],
+                formNewProject: false
             }
         default:
             return state;
