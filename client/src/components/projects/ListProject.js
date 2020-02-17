@@ -11,7 +11,7 @@ const ListProject = () => {
         getProjects();
     }, []);
 
-    if(projects.length === 0) return null;
+    if(projects.length === 0) return <p>Crea tu primer proyecto</p>;
 
     return (
        <ul className="listado-proyectos">

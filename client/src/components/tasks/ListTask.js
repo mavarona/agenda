@@ -4,7 +4,7 @@ import projectContext from '../../context/projects/projectContext';
 
 const ListTask = () => {
     const dataProjectContext = useContext(projectContext);
-    const { project } = dataProjectContext;
+    const { project, deleteProject } = dataProjectContext;
 
     if(!project) return <h2>No se ha seleccionado ningún proyecto</h2>
 
@@ -17,6 +17,11 @@ const ListTask = () => {
         {name:'Comprar frontal', completed: false},
         {name: 'Sacar certificado médico', completed:true}
     ];
+
+    const onClickDelete = () => {
+        deleteProject(currentProject.id);
+    }
+
     return(
         <Fragment>
             <h2>Proyecto: {currentProject.name}</h2>
@@ -34,6 +39,7 @@ const ListTask = () => {
             <button
                 type="button"
                 className="btn btn-eliminar"
+                onClick={onClickDelete}
             >
                 Elminar Proyecto &times;
             </button>
