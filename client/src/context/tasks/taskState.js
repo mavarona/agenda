@@ -5,23 +5,24 @@ import TaskReducer from './taskReducer';
 import {
     TASKS_PROJECT,
     ADD_TASK,
-    VALIDATE_TASK
+    VALIDATE_TASK,
+    DELETE_TASK
 } from '../../types'
 
 const TaskState = props => {
     const initialState = {
         tasks: [
-            {name:'Inscribirse', completed: true, projectId: 3},
-            {name:'Reservar vuelos', completed: true, projectId: 3},
-            {name:'Alquilar apartamento', completed: false, projectId: 3},
-            {name:'Comprar frontal', completed: false, projectId: 3},
-            {name: 'Sacar certificado médico', completed:true, projectId: 3},
-            {name:'Inscribirse', completed: true, projectId: 1},
-            {name:'Reservar en casa Ángel', completed: false, projectId: 1},
-            {name:'Inscribirse', completed: true, projectId: 2},
-            {name:'Reservar Aparta hotel', completed: false, projectId: 2},
-            {name:'Comprar billetes a Tenerife', completed: false, projectId: 2},
-            {name:'Comprar billetes binter a la palma', completed: false, projectId: 2}
+            {id:1, name:'Inscribirse', completed: true, projectId: 3},
+            {id:2, name:'Reservar vuelos', completed: true, projectId: 3},
+            {id:3, name:'Alquilar apartamento', completed: false, projectId: 3},
+            {id:4, name:'Comprar frontal', completed: false, projectId: 3},
+            {id:5, name: 'Sacar certificado médico', completed:true, projectId: 3},
+            {id:6, name:'Inscribirse', completed: true, projectId: 1},
+            {id:7, name:'Reservar en casa Ángel', completed: false, projectId: 1},
+            {id:8, name:'Inscribirse', completed: true, projectId: 2},
+            {id:9, name:'Reservar Aparta hotel', completed: false, projectId: 2},
+            {id:10, name:'Comprar billetes a Tenerife', completed: false, projectId: 2},
+            {id:11, name:'Comprar billetes binter a la palma', completed: false, projectId: 2}
         ],
         tasksProject: null,
         errorTask: false
@@ -48,6 +49,13 @@ const TaskState = props => {
         })
     }
 
+    const deleteTask = id => {
+        dispatch({
+            type: DELETE_TASK,
+            payload: id        
+        });
+    }
+
     return(
         <TaskContext.Provider
             value={{
@@ -56,7 +64,8 @@ const TaskState = props => {
                 errorTask: state.errorTask,
                 getTasks,
                 addTask,
-                validateTask
+                validateTask,
+                deleteTask
             }}
         >
             {props.children}
