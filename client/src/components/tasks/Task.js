@@ -8,13 +8,18 @@ const Task = ({task}) => {
     const { project } = dataProjectContext;
 
     const dataTaskContext = useContext(taskContext);
-    const { deleteTask, getTasks } = dataTaskContext;
+    const { deleteTask, getTasks, changeStateTask } = dataTaskContext;
 
     const [currentProject] =  project;
 
     const taskDelete = id => {
         deleteTask(id);
         getTasks(currentProject.id);
+    }
+
+    const changeState = task => {
+        task.completed = !task.completed;
+        changeStateTask(task);
     }
 
     return(
@@ -26,6 +31,7 @@ const Task = ({task}) => {
                     <button
                         type="button"
                         className="completo"
+                        onClick={() => changeState(task)}
                     >
                         Completo
                     </button>
@@ -34,6 +40,7 @@ const Task = ({task}) => {
                     <button
                         type="button"
                         className="incompleto"
+                        onClick={() => changeState(task)}
                     >
                         Incompleto
                     </button>
