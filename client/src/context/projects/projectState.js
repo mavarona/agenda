@@ -3,28 +3,28 @@ import uuid from 'uuid';
 
 import projectContext from './projectContext';
 import projectReducer from './projectReducer';
-import { 
-    FORM_PROJECT, 
+import {
+    FORM_PROJECT,
     GET_PROJECTS,
     ADD_PROJECT,
     VALIDATE_FORM,
     SELECT_PROJECT,
-    DELETE_PROJECT 
-} 
+    DELETE_PROJECT
+}
 from '../../types';
 
 const ProjectState = props => {
     const initialState = {
-        projects : [],
+        projects: [],
         formnewproject: false,
         errorform: false,
         project: null
     }
 
     const projects = [
-        {id:1, name: 'Marathon Alpina'},
-        {id:2, name: 'Viaje a la palma'},
-        {id:3, name: 'Viaje a Chamonix'}
+        { id: 1, name: 'Marathon Alpina' },
+        { id: 2, name: 'Viaje a la palma' },
+        { id: 3, name: 'Viaje a Chamonix' }
     ];
 
     const [state, dispatch] = useReducer(projectReducer, initialState);
@@ -42,7 +42,7 @@ const ProjectState = props => {
         })
     }
 
-    const addProject = project =>{
+    const addProject = project => {
         project.id = uuid.v4();
         dispatch({
             type: ADD_PROJECT,
@@ -50,13 +50,13 @@ const ProjectState = props => {
         })
     }
 
-    const showError = () =>{
+    const showError = () => {
         dispatch({
             type: VALIDATE_FORM
         })
     }
 
-    const selectProject = projectId => {
+    const currentProject = projectId => {
         dispatch({
             type: SELECT_PROJECT,
             payload: projectId
@@ -70,9 +70,9 @@ const ProjectState = props => {
         })
     }
 
-    return(
-        <projectContext.Provider
-            value={{
+    return ( <
+        projectContext.Provider value = {
+            {
                 projects: state.projects,
                 formnewproject: state.formnewproject,
                 errorform: state.errorform,
@@ -81,12 +81,11 @@ const ProjectState = props => {
                 getProjects,
                 addProject,
                 showError,
-                selectProject,
+                currentProject,
                 deleteProject
-            }}
-        >
-            {props.children}
-        </projectContext.Provider>
+            }
+        } > { props.children } <
+        /projectContext.Provider>
     )
 
 }

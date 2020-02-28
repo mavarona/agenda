@@ -1,10 +1,19 @@
 import React, { useContext } from 'react'
 import projectContext from '../../context/projects/projectContext';
+import taskContext from '../../context/tasks/taskContext';
 
 const Project = ({project}) => {
 
     const dataProjectContext = useContext(projectContext);
-    const { selectProject } = dataProjectContext;
+    const { currentProject } = dataProjectContext;
+
+    const dataTaskContext = useContext(taskContext);
+    const { getTasks } = dataTaskContext;
+
+    const selectProject = id =>{
+        currentProject(id);
+        getTasks(id);
+    }
 
     return (
         <li>
