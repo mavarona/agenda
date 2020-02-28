@@ -8,7 +8,7 @@ const Task = ({task}) => {
     const { project } = dataProjectContext;
 
     const dataTaskContext = useContext(taskContext);
-    const { deleteTask, getTasks, changeStateTask } = dataTaskContext;
+    const { deleteTask, getTasks, changeStateTask, saveCurrentTask} = dataTaskContext;
 
     const [currentProject] =  project;
 
@@ -20,6 +20,10 @@ const Task = ({task}) => {
     const changeState = task => {
         task.completed = !task.completed;
         changeStateTask(task);
+    }
+
+    const selectTask = task => {
+        saveCurrentTask(task);
     }
 
     return(
@@ -51,6 +55,7 @@ const Task = ({task}) => {
                 <button
                     type="button"
                     className="btn btn-primario"
+                    onClick={() => selectTask(task)}
                 >
                     Editar
                 </button>

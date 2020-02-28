@@ -1,13 +1,16 @@
 import React, { useReducer } from 'react'
 import TaskContext from './taskContext';
 import TaskReducer from './taskReducer';
+import uuid from 'uuid';
 
 import {
     TASKS_PROJECT,
     ADD_TASK,
     VALIDATE_TASK,
     DELETE_TASK,
-    CHANGE_STATE_TASK
+    CHANGE_STATE_TASK,
+    CURRENT_TASK,
+    EDIT_TASK
 } from '../../types'
 
 const TaskState = props => {
@@ -26,7 +29,8 @@ const TaskState = props => {
             {id:11, name:'Comprar billetes binter a la palma', completed: false, projectId: 2}
         ],
         tasksProject: null,
-        errorTask: false
+        errorTask: false,
+        taskSelected: null
     }
     const [state, dispatch] = useReducer(TaskReducer, initialState);
 
@@ -38,6 +42,7 @@ const TaskState = props => {
     }
 
     const addTask = task => {
+        task.id = uuid.v4();
         dispatch({
             type: ADD_TASK,
             payload: task
@@ -64,17 +69,34 @@ const TaskState = props => {
         });
     }
 
+    const saveCurrentTask = task => {
+        dispatch({
+            type: CURRENT_TASK,
+            payload: task
+        })
+    }
+
+    const editTask = task => {
+        dispatch({
+            type: EDIT_TASK,
+            payload: task
+        });
+    }
+
     return(
         <TaskContext.Provider
             value={{
                 tasks: state.tasks,
                 tasksProject: state.tasksProject,
                 errorTask: state.errorTask,
+                taskSelected: state.taskSelected,
                 getTasks,
                 addTask,
                 validateTask,
                 deleteTask,
-                changeStateTask
+                changeStateTask,
+                saveCurrentTask,
+                editTask
             }}
         >
             {props.children}

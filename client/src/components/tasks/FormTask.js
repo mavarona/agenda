@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import projectContext from '../../context/projects/projectContext';
 import taskContext from '../../context/tasks/taskContext';
 
@@ -9,7 +9,17 @@ const FormTask = () => {
 
 
     const dataTaskContext = useContext(taskContext);
-    const { addTask, validateTask, errorTask, getTasks } = dataTaskContext;
+    const { taskSelected, errorTask, addTask, validateTask, getTasks, editTask } = dataTaskContext;
+
+    useEffect(() => {
+        if(taskSelected !== null){
+            saveTask(taskSelected);
+        }else{
+            saveTask({
+                name: ''
+            });
+        }
+    }, [taskSelected])
 
     const [task, saveTask] = useState({
         name: ''
@@ -34,9 +44,14 @@ const FormTask = () => {
             validateTask();
             return;
         }
-        task.projectId = currentProject.id;
-        task.completed = false;
-        addTask(task);
+        if(taskSelected === null){
+            task.projectId = currentProject.id;
+            task.completed = false;
+            addTask(task);
+        } else {
+            editTask(task);
+        }
+
         getTasks(currentProject.id);
         saveTask({
             name: ''
@@ -62,7 +77,7 @@ const FormTask = () => {
                     <input
                         type="submit"
                         className="btn btn-primario btn-submit btn-block"
-                        value="Agregar Tarea"
+                        value={taskSelected ? "Editar Tarea" : "Agregar Tarea"}
                     />
                 </div>
             </form>
