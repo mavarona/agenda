@@ -14,4 +14,14 @@ router.get('/',
     auth,
     projectController.getProjects);
 
+router.put('/:id',
+    auth, [
+        check('name', 'hay que darle un nombre al proyecto').not().isEmpty()
+    ],
+    projectController.updateProject);
+
+router.delete('/:id',
+    auth,
+    projectController.deleteProject);
+
 module.exports = router;
