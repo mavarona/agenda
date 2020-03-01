@@ -6,7 +6,8 @@ const connectDB = async() => {
         await moongoose.connect(process.env.DB_MONGO, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            useFindAndModify: false
+            useFindAndModify: false,
+            useCreateIndex: true
         });
         console.log('Database Connected');
     } catch (err) {
