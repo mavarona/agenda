@@ -77,7 +77,7 @@ exports.deleteProject = async(req, res) => {
         res.json({ msg: 'El proyecto fue eliminado' });
     } catch (err) {
         console.log('Error to uodate a project: ', err);
-        res.send(500).json({ msg: 'Error al actualizar los proyectos' });
+        res.status(500).json({ msg: 'Error al actualizar los proyectos' });
     }
 
 }
