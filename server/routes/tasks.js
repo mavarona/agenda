@@ -15,4 +15,10 @@ router.get('/',
     auth,
     taskController.getTasks);
 
+router.put('/:id',
+    auth, [
+        check('name', 'hay que darle un nombre a la tarea').not().isEmpty()
+    ],
+    taskController.updateTask);
+
 module.exports = router;

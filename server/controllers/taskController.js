@@ -12,7 +12,7 @@ exports.createTask = async(req, res) => {
 
     try {
         const project = await Project.findById(projectId);
-        console.log(project)
+
         if (!project) {
             return res.status(400).json({ msg: 'Proyecto no encontrado' })
         }
@@ -50,6 +50,49 @@ exports.getTasks = async(req, res) => {
     } catch (err) {
         console.log('Error gets a task: ', err);
         res.status(500).json({ msg: 'Error al obtener las tareas' });
+    }
+
+}
+
+exports.updateTask = async(req, res) => {
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() })
+    }
+
+    const { projectId, name, completed } = req.body;
+
+    try {
+
+        let task = await Task.findById(req.params.id);
+
+        if (!task) {
+            return res.status(404).json({ msg: 'La tarea no existe' });
+        }
+
+        const project = await Project.findById(projectId);
+
+        if (project.creator.toString() !== req.user.id) {
+            return res.status(401).json({ msg: 'No autorizado' });
+        }
+
+        const newTask = {};
+        if (name) {
+            newTask.name = name;
+        }
+
+        if (completed) {
+            newTask.completed = completed;
+        }
+
+        task = await Task.findOneAndUpdate({ _id: req.params.id }, newTask, { new: true });
+
+        return res.json({ task });
+
+    } catch (err) {
+        console.log('Error update a task: ', err);
+        res.status(500).json({ msg: 'Error al actualizar una tarea' });
     }
 
 }
