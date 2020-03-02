@@ -24,7 +24,7 @@ exports.getProjects = async(req, res) => {
 
     try {
         const projects = await Project.find({ creator: req.user.id }).sort({ created: -1 });
-        res.json(projects);
+        return res.json(projects);
     } catch (err) {
         console.log('Error to gets the projects: ', err);
         res.send(500).json({ msg: 'Error al obtener los proyectos' });
