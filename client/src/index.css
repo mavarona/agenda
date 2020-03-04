@@ -336,6 +336,7 @@ aside {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
 .contenedor-form {
@@ -373,4 +374,14 @@ aside {
     margin-top: 2rem;
     display: block;
     opacity: .7;
+}
+
+.alerta-ok {
+    background-color: rgb(109,211,109);
+    color: rgb(2, 103, 2);
+}
+
+.alerta-error {
+    background-color: rgb(230,78,78);
+    color: var(--blanco);
 }
