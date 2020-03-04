@@ -99,8 +99,6 @@ exports.updateTask = async(req, res) => {
 
 exports.deleteTask = async(req, res) => {
 
-    const { projectId, name, completed } = req.body;
-
     try {
 
         let task = await Task.findById(req.params.id);
@@ -109,14 +107,8 @@ exports.deleteTask = async(req, res) => {
             return res.status(404).json({ msg: 'La tarea no existe' });
         }
 
-        const project = await Project.findById(projectId);
-
-        if (project.creator.toString() !== req.user.id) {
-            return res.status(401).json({ msg: 'No autorizado' });
-        }
-
         await Task.findByIdAndRemove({ _id: req.params.id });
-        return res.json({ msg: 'La tarea se eleminó' });
+        return res.json({ msg: 'La tarea se eliminó' });
 
     } catch (err) {
         console.log('Error update a task: ', err);
