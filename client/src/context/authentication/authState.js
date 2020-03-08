@@ -31,9 +31,13 @@ const AuthState = props => {
                 payload: response.data
             });
         }catch(err){
-            console.log('Error register user', err);
+            const alert = {
+                msg: err.response.data.msg,
+                category: 'alerta-error'
+            }
             dispatch({
-                type: REGISTER_ERROR
+                type: REGISTER_ERROR,
+                payload: alert
             });
         }
     }
