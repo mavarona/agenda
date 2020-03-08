@@ -3,6 +3,7 @@ import AuthContext from './authContext';
 import AuthReducer from './authReducer';
 
 import clientAxios from '../../config/axios';
+import tokenAuth from '../../config/token';
 
 import {
     REGISTER_SUCCESS,
@@ -30,6 +31,7 @@ const AuthState = props => {
                 type: REGISTER_SUCCESS,
                 payload: response.data
             });
+            userAuthenticated();
         }catch(err){
             const alert = {
                 msg: err.response.data.msg,
@@ -38,6 +40,24 @@ const AuthState = props => {
             dispatch({
                 type: REGISTER_ERROR,
                 payload: alert
+            });
+        }
+    }
+
+    const userAuthenticated = async () => {
+        const token = localStorage.getItem('token');
+        if(token){
+            tokenAuth(token);
+        }
+        try{
+            const response = await clientAxios.get('/api/auth');
+            dispatch({
+                type: GET_USER,
+                payload: response.data.user
+            })
+        }catch(err){
+            dispatch({
+                type: LOGIN_ERROR
             });
         }
     }
