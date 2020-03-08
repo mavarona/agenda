@@ -1,20 +1,24 @@
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import AlertContext from '../../context/alerts/alertContext';
+import AuthContext from '../../context/authentication/authContext';
 
 const Signup = () => {
 
     const alertContext = useContext(AlertContext);
     const { alert, showAlert } = alertContext;
 
+    const authContext = useContext(AuthContext);
+    const { registerUser } = authContext;
+
     const [user, saveUser] = useState({
         name: '',
         email: '',
         password: '',
-        confirmar: ''
+        confirm: ''
     });
 
-    const { name, email, password, confirmar } = user;
+    const { name, email, password, confirm } = user;
 
     const onChangeSignup = e => {
         saveUser({
@@ -25,15 +29,20 @@ const Signup = () => {
 
     const onSubmitSignup = e => {
         e.preventDefault();
-        if(name.trim() === '' || email.trim() === '' || password.trim() === '' || confirmar.trim() === ''){
+        if(name.trim() === '' || email.trim() === '' || password.trim() === '' || confirm.trim() === ''){
             showAlert('Todos los campos son obligatorios','alerta-error');
         }
         if(password.length < 6){
             showAlert('La contraseña debe tener al menos 6 caracteres','alerta-error');
         }
-        if(password !== confirmar){
+        if(password !== confirm){
             showAlert('Las contraseñas no son iguales','alerta-error');
         }
+        registerUser({
+            name,
+            email,
+            password
+        })
     }
 
     return (
@@ -81,10 +90,10 @@ const Signup = () => {
                         <label htmlFor="password">Confirmar Contraseña</label>
                         <input
                             type="password"
-                            id="confirmar"
-                            name="confirmar"
+                            id="confirm"
+                            name="confirm"
                             placeholder="Repite la contraseña"
-                            value={confirmar}
+                            value={confirm}
                             onChange={onChangeSignup}
                         />
                     </div>
