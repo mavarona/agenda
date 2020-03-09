@@ -4,7 +4,7 @@ import AuthContext from '../../context/authentication/authContext.js';
 const Navbar = () => {
 
     const authContext = useContext(AuthContext);
-    const { user, userAuthenticated} = authContext;
+    const { user, userAuthenticated, logout} = authContext;
 
     useEffect( () => {
         userAuthenticated();
@@ -16,7 +16,12 @@ const Navbar = () => {
                         <p className="nombre-usuario">Hola <span>Mike</span></p>
             : null}
             <nav className="nav-principal">
-                <a href="#!">Cerrar Sesión</a>
+                <button
+                    className="btn btn-blank cerrar-sesion"
+                    onClick={() => logout()}
+                >
+                    Cerrar Sesión
+                </button>
             </nav>
         </header>
     );
