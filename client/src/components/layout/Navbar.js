@@ -13,7 +13,7 @@ const Navbar = () => {
     return(
         <header className="app-header">
             {user ?
-                        <p className="nombre-usuario">Hola <span>Mike</span></p>
+                <p className="nombre-usuario">Hola <span>{user.name}</span></p>
             : null}
             <nav className="nav-principal">
                 <button
