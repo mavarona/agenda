@@ -4,6 +4,7 @@ export const ADD_PROJECT = 'ADD_PROJECT';
 export const VALIDATE_FORM = 'VALIDATE_FORM';
 export const SELECT_PROJECT = 'SELECT_PROJECT';
 export const DELETE_PROJECT = 'DELETE_PROJECT';
+export const ERROR_PROJECT = 'ERROR_PROJECT';
 
 export const TASKS_PROJECT = 'TASKS_PROJECT';
 export const ADD_TASK = 'ADD_TASK';
@@ -21,4 +22,4 @@ export const REGISTER_ERROR = 'REGISTER_ERROR';
 export const GET_USER = 'GET_USER';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
-export const LOGOUT= 'LOGOUT';
+export const LOGOUT = 'LOGOUT';

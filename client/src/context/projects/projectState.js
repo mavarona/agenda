@@ -8,7 +8,8 @@ import {
     ADD_PROJECT,
     VALIDATE_FORM,
     SELECT_PROJECT,
-    DELETE_PROJECT
+    DELETE_PROJECT,
+    ERROR_PROJECT
 }
 from '../../types';
 
@@ -19,7 +20,8 @@ const ProjectState = props => {
         projects: [],
         formnewproject: false,
         errorform: false,
-        project: null
+        project: null,
+        message: null
     }
 
     const [state, dispatch] = useReducer(projectReducer, initialState);
@@ -39,6 +41,14 @@ const ProjectState = props => {
             });
         } catch (err) {
             console.log(err);
+            const alert = {
+                msg: 'Hubo un error',
+                category: 'alerta-error'
+            }
+            dispatch({
+                type: ERROR_PROJECT,
+                payload: alert
+            });
         }
     }
 
@@ -51,6 +61,14 @@ const ProjectState = props => {
             })
         } catch (err) {
             console.log(err);
+            const alert = {
+                msg: 'Hubo un error',
+                category: 'alerta-error'
+            }
+            dispatch({
+                type: ERROR_PROJECT,
+                payload: alert
+            });
         }
     }
 
@@ -67,20 +85,33 @@ const ProjectState = props => {
         })
     }
 
-    const deleteProject = projectId => {
-        dispatch({
-            type: DELETE_PROJECT,
-            payload: projectId
-        })
+    const deleteProject = async projectId => {
+        try {
+            await clientAxios.delete(`/api/projects/1`);
+            dispatch({
+                type: DELETE_PROJECT,
+                payload: projectId
+            });
+        } catch (err) {
+            console.log(err);
+            const alert = {
+                msg: 'Hubo un error',
+                category: 'alerta-error'
+            }
+            dispatch({
+                type: ERROR_PROJECT,
+                payload: alert
+            });
+        }
     }
 
-    return ( <
-        projectContext.Provider value = {
+    return ( <projectContext.Provider value = {
             {
                 projects: state.projects,
                 formnewproject: state.formnewproject,
                 errorform: state.errorform,
                 project: state.project,
+                message: state.message,
                 showForm,
                 getProjects,
                 addProject,
@@ -88,8 +119,7 @@ const ProjectState = props => {
                 currentProject,
                 deleteProject
             }
-        } > { props.children } <
-        /projectContext.Provider>
+        } > { props.children } </projectContext.Provider>
     )
 
 }
