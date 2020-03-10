@@ -22,12 +22,6 @@ const ProjectState = props => {
         project: null
     }
 
-    const projects = [
-        { id: 1, name: 'Marathon Alpina' },
-        { id: 2, name: 'Viaje a la palma' },
-        { id: 3, name: 'Viaje a Chamonix' }
-    ];
-
     const [state, dispatch] = useReducer(projectReducer, initialState);
 
     const showForm = () => {
@@ -36,11 +30,16 @@ const ProjectState = props => {
         });
     }
 
-    const getProjects = () => {
-        dispatch({
-            type: GET_PROJECTS,
-            payload: projects
-        })
+    const getProjects = async () => {
+        try {
+            const response = await clientAxios.get('/api/projects');
+            dispatch({
+                type: GET_PROJECTS,
+                payload: response.data
+            });
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     const addProject = async project => {
