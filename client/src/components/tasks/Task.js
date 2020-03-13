@@ -8,7 +8,7 @@ const Task = ({task}) => {
     const { project } = dataProjectContext;
 
     const dataTaskContext = useContext(taskContext);
-    const { deleteTask, getTasks, changeStateTask, saveCurrentTask} = dataTaskContext;
+    const { deleteTask, getTasks, editTask, saveCurrentTask} = dataTaskContext;
 
     const [currentProject] =  project;
 
@@ -19,7 +19,7 @@ const Task = ({task}) => {
 
     const changeState = task => {
         task.completed = !task.completed;
-        changeStateTask(task);
+        editTask(task);
     }
 
     const selectTask = task => {

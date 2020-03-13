@@ -80,9 +80,7 @@ exports.updateTask = async(req, res) => {
             newTask.name = name;
         }
 
-        if (completed) {
-            newTask.completed = completed;
-        }
+        newTask.completed = completed;
 
         task = await Task.findOneAndUpdate({ _id: req.params.id }, newTask, { new: true });
 
