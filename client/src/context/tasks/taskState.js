@@ -1,7 +1,6 @@
 import React, { useReducer } from 'react'
 import TaskContext from './taskContext';
 import TaskReducer from './taskReducer';
-import uuid from 'uuid';
 
 import {
     TASKS_PROJECT,
@@ -11,24 +10,12 @@ import {
     CHANGE_STATE_TASK,
     CURRENT_TASK,
     EDIT_TASK
-} from '../../types'
+} from '../../types';
+import clientAxios from '../../config/axios';
 
 const TaskState = props => {
     const initialState = {
-        tasks: [
-            {id:1, name:'Inscribirse', completed: true, projectId: 3},
-            {id:2, name:'Reservar vuelos', completed: true, projectId: 3},
-            {id:3, name:'Alquilar apartamento', completed: false, projectId: 3},
-            {id:4, name:'Comprar frontal', completed: false, projectId: 3},
-            {id:5, name: 'Sacar certificado médico', completed:true, projectId: 3},
-            {id:6, name:'Inscribirse', completed: true, projectId: 1},
-            {id:7, name:'Reservar en casa Ángel', completed: false, projectId: 1},
-            {id:8, name:'Inscribirse', completed: true, projectId: 2},
-            {id:9, name:'Reservar Aparta hotel', completed: false, projectId: 2},
-            {id:10, name:'Comprar billetes a Tenerife', completed: false, projectId: 2},
-            {id:11, name:'Comprar billetes binter a la palma', completed: false, projectId: 2}
-        ],
-        tasksProject: null,
+        tasksProject: [],
         errorTask: false,
         taskSelected: null
     }
@@ -41,12 +28,16 @@ const TaskState = props => {
         })
     }
 
-    const addTask = task => {
-        task.id = uuid.v4();
-        dispatch({
-            type: ADD_TASK,
-            payload: task
-        })
+    const addTask = async task => {
+        try {
+            const response = await clientAxios.post('/api/tasks', task);
+            dispatch({
+                type: ADD_TASK,
+                payload: task
+            })
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     const validateTask = () =>{
@@ -86,7 +77,6 @@ const TaskState = props => {
     return(
         <TaskContext.Provider
             value={{
-                tasks: state.tasks,
                 tasksProject: state.tasksProject,
                 errorTask: state.errorTask,
                 taskSelected: state.taskSelected,
