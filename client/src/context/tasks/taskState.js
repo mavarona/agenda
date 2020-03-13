@@ -21,16 +21,21 @@ const TaskState = props => {
     }
     const [state, dispatch] = useReducer(TaskReducer, initialState);
 
-    const getTasks = projectId => {
-        dispatch({
-            type: TASKS_PROJECT,
-            payload: projectId
-        })
+    const getTasks = async projectId => {
+        try {
+            const response = await clientAxios.get('/api/tasks', { params: {projectId} });
+            dispatch({
+                type: TASKS_PROJECT,
+                payload: response.data || []
+            });
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     const addTask = async task => {
         try {
-            const response = await clientAxios.post('/api/tasks', task);
+            await clientAxios.post('/api/tasks', task);
             dispatch({
                 type: ADD_TASK,
                 payload: task

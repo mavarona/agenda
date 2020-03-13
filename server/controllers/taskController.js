@@ -32,11 +32,10 @@ exports.createTask = async(req, res) => {
 
 exports.getTasks = async(req, res) => {
 
-    const { projectId } = req.body;
+    const { projectId } = req.query;
 
     try {
         const project = await Project.findById(projectId);
-        console.log(project)
         if (!project) {
             return res.status(400).json({ msg: 'Proyecto no encontrado' })
         }
@@ -44,8 +43,7 @@ exports.getTasks = async(req, res) => {
         if (project.creator.toString() !== req.user.id) {
             return res.status(401).json({ msg: 'No autorizado' });
         }
-
-        const tasks = await Task.find({ projectId });
+        const tasks = await Task.find({ projectId }).sort({ created: -1 });
         return res.json(tasks);
     } catch (err) {
         console.log('Error gets a task: ', err);
