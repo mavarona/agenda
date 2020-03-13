@@ -35,7 +35,7 @@ const TaskState = props => {
 
     const addTask = async task => {
         try {
-            await clientAxios.post('/api/tasks', task);
+            await clientAxios.post(`/api/tasks`, task);
             dispatch({
                 type: ADD_TASK,
                 payload: task
@@ -51,18 +51,23 @@ const TaskState = props => {
         })
     }
 
-    const deleteTask = id => {
-        dispatch({
-            type: DELETE_TASK,
-            payload: id        
-        });
+    const deleteTask = async (id, projectId) => {
+        try {
+            await clientAxios.delete(`/api/tasks/${id}`, { params: { projectId }});
+            dispatch({
+                type: DELETE_TASK,
+                payload: id        
+            })
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     const changeStateTask = task => {
         dispatch({
             type: CHANGE_STATE_TASK,
             payload: task
-        });
+        });   
     }
 
     const saveCurrentTask = task => {

@@ -29,13 +29,13 @@ export default (state, action) => {
         case DELETE_TASK:
             return {
                 ...state,
-                tasksProject: state.tasksProject.filter(task => task.id !== action.payload)
+                tasksProject: state.tasksProject.filter(task => task._id !== action.payload)
             }
         case CHANGE_STATE_TASK:
         case EDIT_TASK:
             return {
                 ...state,
-                tasksProject: state.tasksProject.map(task => task.id === action.payload.id ? action.payload : task),
+                tasksProject: state.tasksProject.map(task => task._id === action.payload.id ? action.payload : task),
                 taskSelected: null
             }
         case CURRENT_TASK:

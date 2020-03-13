@@ -51,7 +51,7 @@ const FormTask = () => {
             editTask(task);
         }
 
-        getTasks(currentProject.id);
+        getTasks(currentProject._id);
         saveTask({
             name: ''
         });
